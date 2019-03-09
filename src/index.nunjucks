@@ -11,12 +11,14 @@
 {% block content %}
 
 
-    <p>
-      Hello {{link.content({
-        href: 'https://github.com/larsonjj/generator-yeogurt#yeogurt-generator---',
-        text: 'World'
-      })}}.
-    </p>
-
+{{ site.data.harvard_park_homicides }}
+<hr/>
+{% for obj in site.data.harvard_park_homicides %}
+    {{ obj }}
+{% endfor %}
+<hr/>
+{% for obj in site.data.harvard_park_homicides %}
+    {{obj.case_number}} {{obj.first_name}} {{obj.middle_name}} {{ obj.last_name }} <br>
+{% endfor %}
 
 {% endblock %}
