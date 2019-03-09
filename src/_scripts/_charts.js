@@ -3,7 +3,7 @@ var d3 = require('d3');
 function createChart(el, fieldname) {
   var margin = {top: 20, right:20, bottom:20, left:40};
 
-  var container = d3.select('#county-homicides');
+  var container = d3.select(el);
   var containerWidth = container.node().offsetWidth;
   var containerHeight = containerWidth * 0.66;
   var chartWidth = containerWidth - margin.right - margin.left;
@@ -16,7 +16,7 @@ function createChart(el, fieldname) {
       .attr('transform', `translate(${margin.left}, ${margin.top})`)
 
   var xDomain = annualTotals.map(d => d.year)
-  var yDomain = [0, d3.max(annualTotals.map(d => d.homicides_total))+200]
+  var yDomain = [0, d3.max(annualTotals.map(d => d[fieldname]))]
 
   var xScale = d3.scaleBand()
     .domain(xDomain)
@@ -49,8 +49,10 @@ function createChart(el, fieldname) {
     .append('rect')
     .attr('class','bar')
     .attr('x', d => xScale(d.year))
-    .attr('y', d => yScale(d.homicides_total))
+    .attr('y', d => yScale(d[fieldname]))
     .attr('width', xScale.bandwidth())
-    .attr('height', d => chartHeight - yScale(d.homicides_total))
-
+    .attr('height', d => chartHeight - yScale(d[fieldname]))
 }
+
+createChart('#county-homicides', 'homicides_total');
+createChart('#harvard-park-homicides', 'homicides_harvard_park');
